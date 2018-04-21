@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Input, Select} from 'antd'
 const Option = Select.Option
 
-export default class CustomWithUnitInput extends React.Component {
+export default class CustomWithUnitInput extends Component {
     constructor(props) {
       super(props);
   

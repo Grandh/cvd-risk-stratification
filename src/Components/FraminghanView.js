@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Button, notification, message, Radio } from 'antd';
+import { Form, Input, Tooltip, Icon, Select, Button, notification, message, Radio } from 'antd';
 import caculateFraminghanModel, {checkNumberInput} from './Model/FraminghanModel.js'
 import CustomWithUnitInput from './CustomWithUnitInput'
 const RadioGroup = Radio.Group
@@ -79,7 +79,6 @@ class FraminghanView extends Component {
 
       render() {
         const { getFieldDecorator } = this.props.form;
-        const { autoCompleteResult } = this.state;
     
         const formItemLayout = {
           labelCol: {

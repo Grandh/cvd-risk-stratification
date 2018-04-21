@@ -196,7 +196,7 @@ function caculateFraminghanModel(
     // console.log(riskLevelIndex)
     const riskLevel = PtsTotalRiskList[sex][ptType][riskLevelIndex]
 
-    callback('success','计算结果','患者(' + ptType + ') 患病概率: ' + riskLevel + '%')
+    callback('success','计算结果','患者(' + ptType + ')10年患病风险: ' + riskLevel + '%')
 }
 
 export default caculateFraminghanModel

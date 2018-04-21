@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Button, notification, message, Radio } from 'antd';
+import { Form, Input, Tooltip, Icon, Select, Button, notification, message, Radio } from 'antd';
 import caculateScoreModel from './Model/SCOREModel'
 import { checkNumberInput } from './Model/FraminghanModel'
 import CustomWithUnitInput from './CustomWithUnitInput'
@@ -43,8 +43,8 @@ class SCOREView extends Component {
                 flag = false;
               }
             }
-            systolic = checkNumberInput(systolic, this.showMessage, '舒张压输入可能有误')
-            cholesterol.number = checkNumberInput(cholesterol.number, this.showMessage, '舒张压输入可能有误') 
+            systolic = checkNumberInput(systolic, this.showMessage, '收缩压输入可能有误')
+            cholesterol.number = checkNumberInput(cholesterol.number, this.showMessage, '胆固醇输入可能有误') 
 
             if ( age === null || systolic===null || cholesterol.number === null ) flag = false
             if (flag) caculateScoreModel ({sex, age, smoker, systolic, cholesterol }, this.openNotification) 
@@ -87,14 +87,6 @@ class SCOREView extends Component {
             },
           },
         };
-        const prefixSelector = getFieldDecorator('prefix', {
-          initialValue: '86',
-        })(
-          <Select style={{ width: 70 }}>
-            <Option value="86">+86</Option>
-            <Option value="87">+87</Option>
-          </Select>
-        );
 
         return (
           <Form onSubmit={this.handleSubmit}>

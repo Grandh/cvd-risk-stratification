@@ -1,4 +1,4 @@
-import { getLimitGapIndex, getNoneLimitGapIndex} from './FraminghanModel'
+import { getNoneLimitGapIndex } from './FraminghanModel'
 
 const riskTableMenSmoker = [
     2,2,3,3,4,
@@ -142,7 +142,7 @@ function caculateScoreModel({sex, age, smoker, systolic, cholesterol}, callback)
     
     const systolicGap = [120,140,160,180]
     var systolicIndex = 0
-    for (var i=0; i <systolicGap.length; i++) {
+    for ( i=0; i <systolicGap.length; i++) {
         if (systolic < systolicGap[i]) {
             break
         }
@@ -155,7 +155,7 @@ function caculateScoreModel({sex, age, smoker, systolic, cholesterol}, callback)
     const cholesterolValue = cholesterol.number
     const cholesterolUnit = cholesterol.unit
     if (cholesterolUnit === 'mmol') {
-        for ( var i = 0 ; i < cholesterolMMOLGap.length ; i++) {
+        for ( i = 0 ; i < cholesterolMMOLGap.length ; i++) {
             if (cholesterolValue <= cholesterolMMOLGap[i]) {
                 break
             }
@@ -168,7 +168,7 @@ function caculateScoreModel({sex, age, smoker, systolic, cholesterol}, callback)
 
     index = ageIndex * ageBaseline + ( 4 - systolicIndex ) * 5 + cholesterolIndex
     var riskLevel = riskTable[index]
-    callback('success','计算结果','患者患病概率: ' + riskLevel + '%')
+    callback('success','计算结果','患者10年患病风险: ' + riskLevel + '%')
 }
 
 export default caculateScoreModel
