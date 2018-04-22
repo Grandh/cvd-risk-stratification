@@ -10,3 +10,16 @@
     align-items: center;
     justify-content: space-around
 }
+
+.ant-custom-model-form .ant-form-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ant-custom-model-form .ant-form-item-label {
+   flex: 0.5;
+}
+.ant-custom-model-form .ant-form-item-control-wrapper {
+    flex: 1;
+}

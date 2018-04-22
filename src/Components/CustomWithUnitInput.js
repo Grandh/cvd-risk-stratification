@@ -2,6 +2,29 @@ import React, {Component} from 'react'
 import {Input, Select} from 'antd'
 const Option = Select.Option
 
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 4 },
+    sm: { span: 4 },
+  },
+  wrapperCol: {
+    xs: { span: 16 },
+    sm: { span: 16 },
+  },
+};
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: { 
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
+
 export default class CustomWithUnitInput extends Component {
     constructor(props) {
       super(props);
@@ -67,4 +90,9 @@ export default class CustomWithUnitInput extends Component {
         </span>
       );
     }
+  }
+
+  export {
+    formItemLayout,
+    tailFormItemLayout
   }

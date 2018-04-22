@@ -2,10 +2,17 @@ import React, { Component } from 'react'
 import './MainPage.css'
 import WrapperSCOREView from './SCOREView'
 import WrapperFraminghanView from './FraminghanView'
-import { Tabs } from 'antd'
+import { Tabs, notification } from 'antd'
 const TabPane = Tabs.TabPane
 
 export default class MainPage extends Component {
+
+    componentDidMount () {
+        notification.config({
+            top: 50,
+            duration: 3,
+          });
+    }
     render () {
         return (
             <div className='main-page-container'>

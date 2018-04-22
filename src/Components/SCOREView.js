@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Form, Input, Tooltip, Icon, Select, Button, notification, message, Radio } from 'antd';
+import { Form, Input, Tooltip, Icon, Button, notification, message, Radio } from 'antd';
 import caculateScoreModel from './Model/SCOREModel'
 import { checkNumberInput } from './Model/FraminghanModel'
-import CustomWithUnitInput from './CustomWithUnitInput'
+import CustomWithUnitInput, { tailFormItemLayout } from './CustomWithUnitInput'
 const FormItem = Form.Item
-const Option = Select.Option
 const RadioGroup = Radio.Group
 
 class SCOREView extends Component {
@@ -13,6 +12,12 @@ class SCOREView extends Component {
       confirmDirty: false,
     };
 
+    // componentDidMount () {
+    //   setInterval(this.testNotification, 2000)
+    // }
+    // testNotification = () => {
+    //   this.openNotification('success', "测试", '弹出')
+    // }
     openNotification = (type, title, desc) => {
         notification[type]({
             message: title,
@@ -36,7 +41,7 @@ class SCOREView extends Component {
             var {sex, age, smoker, systolic, cholesterol} = values
             var flag = true 
 
-            let age = checkNumberInput(age, this.showMessage, '患者年龄输入可能有误')
+            age = checkNumberInput(age, this.showMessage, '患者年龄输入可能有误')
             if ( age ) {
               if (age < 40) {
                 this.showMessage('error', "SCORE模型支持40岁以上患者的CVD风险评估，请考虑其他模型")
@@ -63,54 +68,29 @@ class SCOREView extends Component {
 
       render() {
         const { getFieldDecorator } = this.props.form;
-        const { autoCompleteResult } = this.state;
-    
-        const formItemLayout = {
-          labelCol: {
-            xs: { span: 12 },
-            sm: { span: 6 },
-          },
-          wrapperCol: {
-            xs: { span: 12 },
-            sm: { span: 12 },
-          },
-        };
-        const tailFormItemLayout = {
-          wrapperCol: {
-            xs: {
-              span: 24,
-              offset: 0,
-            },
-            sm: {
-              span: 16,
-              offset: 8,
-            },
-          },
-        };
 
         return (
-          <Form onSubmit={this.handleSubmit}>
-
+          <Form 
+            className='ant-custom-model-form'
+            onSubmit={this.handleSubmit}>
+              <FormItem
+                label='性别'
+              >
+                {getFieldDecorator('sex', 
+                {
+                  initialValue: 'male',
+                  rules: [{
+                    required: true, message: '请选择患者性别', whitespace: true
+                  },]
+                })(
+                  <RadioGroup >
+                    <Radio value={'male'}>男</Radio>
+                    <Radio value={'female'}>女</Radio>
+                  </RadioGroup>
+                )}
+              </FormItem>
+  
             <FormItem
-              {...formItemLayout}
-              label='性别'
-            >
-              {getFieldDecorator('sex', 
-              {
-                initialValue: 'male',
-                rules: [{
-                  rules: [{ required: true, message: '请选择患者性别', whitespace: true }],
-                },]
-              })(
-                <RadioGroup style={{marginLeft: '5%'}}>
-                  <Radio value={'male'}>男</Radio>
-                  <Radio value={'female'}>女</Radio>
-                </RadioGroup>
-              )}
-            </FormItem>
-
-            <FormItem
-            {...formItemLayout}
             label={(
               <span>
                   年龄&nbsp;
@@ -127,10 +107,9 @@ class SCOREView extends Component {
             })(
               <Input />
             )}
-          </FormItem>
+            </FormItem>
 
             <FormItem
-              {...formItemLayout}
               label={(
                 <span>
                     是否吸烟&nbsp;
@@ -140,18 +119,20 @@ class SCOREView extends Component {
                 </span>
               )}
             >
-              {getFieldDecorator('smoker',{
-                initialValue: 'no',
+            {getFieldDecorator('smoker', {
+              initialValue: 'no',
+              rules: [{
+                required: true,
+              }, ],
             })(
-              <RadioGroup style={{marginLeft: '5%'}}>
+              <RadioGroup>
                 <Radio value={'no'}>否</Radio>
                 <Radio value={'yes'}>是</Radio>
               </RadioGroup>
-              )}
+            )}
             </FormItem>
             
            <FormItem
-            {...formItemLayout}
             label='收缩压'
           >
             {getFieldDecorator('systolic', {
@@ -165,13 +146,13 @@ class SCOREView extends Component {
           </FormItem>
 
            <FormItem
-            {...formItemLayout}
             label='胆固醇'
           >
             {getFieldDecorator('cholesterol', {
               initialValue: {number: '', unit: 'mmol'},
               rules: [{
                 validator: this.checkCholesterol,
+                required: true
               },],
             })(
               <CustomWithUnitInput />

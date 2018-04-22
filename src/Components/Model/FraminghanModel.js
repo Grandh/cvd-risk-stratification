@@ -27,13 +27,6 @@ function checkNumberInput (value, callback, content) {
     return num
 }
 
-const male = 'male'
-const female = 'female'
-const LDL = 'LDL'
-const Chol = 'Chol'
-const mmol = 'mmol'
-const mg = 'mg'
-
 const ageGapList = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75]
 const agePtsList = {
     male: {
@@ -196,7 +189,7 @@ function caculateFraminghanModel(
     // console.log(riskLevelIndex)
     const riskLevel = PtsTotalRiskList[sex][ptType][riskLevelIndex]
 
-    callback('success','计算结果','患者(' + ptType + ')10年患病风险: ' + riskLevel + '%')
+    callback('success','计算结果','患者(基于' + ptType + ')10年患病风险: ' + riskLevel + '%')
 }
 
 export default caculateFraminghanModel

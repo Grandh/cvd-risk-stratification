@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form, Input, Tooltip, Icon, Select, Button, notification, message, Radio } from 'antd';
 import caculateFraminghanModel, {checkNumberInput} from './Model/FraminghanModel.js'
-import CustomWithUnitInput from './CustomWithUnitInput'
+import CustomWithUnitInput, { tailFormItemLayout } from './CustomWithUnitInput'
 const RadioGroup = Radio.Group
 const FormItem = Form.Item
 const Option = Select.Option
@@ -36,7 +36,7 @@ class FraminghanView extends Component {
           ldlOrChol.type = this.state.modelType
           // 进行计算前的校验
           var flag = true 
-          let age = checkNumberInput(age, this.showMessage, '患者年龄输入可能有误')
+          age = checkNumberInput(age, this.showMessage, '患者年龄输入可能有误')
           if ( age ) {
             if (age < 30 || age > 74) {
               this.showMessage('error', "Framinghan模型支持30-74岁患者的CVD风险评估")
@@ -68,6 +68,7 @@ class FraminghanView extends Component {
             break;
           case 'Chol':callback('胆固醇输入可能有误！')
             break
+          default: break
         }
       }
 
@@ -78,43 +79,21 @@ class FraminghanView extends Component {
       }
 
       render() {
-        const { getFieldDecorator } = this.props.form;
-    
-        const formItemLayout = {
-          labelCol: {
-            xs: { span: 12 },
-            sm: { span: 6 },
-          },
-          wrapperCol: {
-            xs: { span: 12 },
-            sm: { span: 12 },
-          },
-        };
-        const tailFormItemLayout = {
-          wrapperCol: {
-            xs: {
-              span: 24,
-              offset: 0,
-            },
-            sm: {
-              span: 16,
-              offset: 8,
-            },
-          },
-        };
+        const { getFieldDecorator } = this.props.form
 
         return (
-          <Form onSubmit={this.handleSubmit}>
+          <Form 
+            className='ant-custom-model-form'
+            onSubmit={this.handleSubmit}>
 
             <FormItem
-              {...formItemLayout}
               label='性别'
             >
               {getFieldDecorator('sex', 
               {
                 initialValue: 'male',
                 rules: [{
-                  rules: [{ required: true, message: '请选择患者性别', whitespace: true }],
+                  required: true, message: '请选择患者性别', whitespace: true
                 },]
               })(
                 <RadioGroup style={{marginLeft: '5%'}}>
@@ -125,7 +104,6 @@ class FraminghanView extends Component {
             </FormItem>
 
            <FormItem
-            {...formItemLayout}
             label={(
               <span>
                   年龄&nbsp;
@@ -145,14 +123,13 @@ class FraminghanView extends Component {
           </FormItem>
 
            <FormItem
-            {...formItemLayout}
             label={
               <Select 
                 defaultValue={this.state.modelType} 
                 onChange={this.changeModeType}
                 style={{marginRight:'5px', 'maxWidth':'100px'}}
               >
-                <Option value="LDL">LDL</Option>
+                <Option value="LDL">LDL-C</Option>
                 <Option value="Chol">胆固醇</Option>
               </Select>
             }
@@ -168,13 +145,13 @@ class FraminghanView extends Component {
           </FormItem>
 
            <FormItem
-            {...formItemLayout}
             label='HDL-C'
           >
             {getFieldDecorator('hdl', {
               initialValue: {number: '', unit: 'mmol'},
               rules: [{
                 validator: this.checkLDLOrCholesterol,
+                required: true
               },],
             })(
               <CustomWithUnitInput />
@@ -182,8 +159,14 @@ class FraminghanView extends Component {
           </FormItem>
 
           <FormItem
-            {...formItemLayout}
-            label='收缩压'
+            label={(
+              <span>
+                  收缩压&nbsp;
+                  <Tooltip title="收缩压与舒张压的单位都为mmHg">
+                    <Icon type="info-circle-o" />
+                  </Tooltip>
+              </span>
+            )}
           >
             {getFieldDecorator('systolic', {
               rules: [{
@@ -196,7 +179,6 @@ class FraminghanView extends Component {
           </FormItem>
 
           <FormItem
-            {...formItemLayout}
             label='舒张压'
           >
             {getFieldDecorator('diastolic', {
@@ -210,7 +192,6 @@ class FraminghanView extends Component {
           </FormItem>
 
             <FormItem
-              {...formItemLayout}
               label="是否患糖尿病"
             >
               {getFieldDecorator('diabetes',{
@@ -224,7 +205,6 @@ class FraminghanView extends Component {
             </FormItem>
 
             <FormItem
-              {...formItemLayout}
               label={(
                 <span>
                     是否吸烟&nbsp;

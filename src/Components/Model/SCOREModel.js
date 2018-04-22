@@ -112,7 +112,7 @@ function caculateScoreModel({sex, age, smoker, systolic, cholesterol}, callback)
 
     var index
     var riskTable = null
-    if (sex = 'male') {
+    if (sex === 'male') {
         if ( smoker === 'yes' ) {
             riskTable = riskTableMenSmoker
         }
